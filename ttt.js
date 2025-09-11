@@ -5,7 +5,7 @@ function createGameboard() {
     const addX = function(row, col) { gameBoard[row][col] = "X"};
     const addO = function(row, col) { gameBoard[row][col] = "O"};
     const display = function() {
-        let container = document.getElementById("container");
+        let container = document.getElementById("game");
         for(let r = 0; r < gameBoard.length; r++) {
             // may change element type
             let row = document.createElement("p");
@@ -25,12 +25,20 @@ function players() {
     //X or O
     const mark = "";
     const display = function() {
-        let container = document.getElementById("container");
+        let container = document.getElementById("game");
         let s = document.createElement("p");
         s.textContent = score;
         container.appendChild(s);
-    }
-    return {display};
+    };
+    const changeMark = function(newMark) {
+        mark = newMark;
+    };
+    return {display, changeMark};
+}
+
+function game() {
+    const playerOne = players();
+    const playerTwo = players();
 }
 var board = createGameboard();
 board.display();
