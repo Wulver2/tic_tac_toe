@@ -16,11 +16,23 @@ function createGameboard() {
         }
     };
     // may add function to play/update display when addX or add0 is used
-    
+
     return {addX, addO, display};
 }
 
-var game = createGameboard();
-game.display();
-game.addX(0,0);
-game.addO(2,1);
+function players() {
+    var score = 0;
+    //X or O
+    const mark = "";
+    const display = function() {
+        let container = document.getElementById("container");
+        let s = document.createElement("p");
+        s.textContent = score;
+        container.appendChild(s);
+    }
+    return {display};
+}
+var board = createGameboard();
+board.display();
+board.addX(0,0);
+board.addO(2,1);
