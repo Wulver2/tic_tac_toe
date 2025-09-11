@@ -9,3 +9,14 @@
     padding: 35px;
     color: white;
 }
+
+#game {
+    display: grid;
+    grid-template-rows: repeat(3, 10px);
+    gap: 5px;
+    text-align: center;
+}
+
+#game .row  {
+    font-size: 64px;
+}

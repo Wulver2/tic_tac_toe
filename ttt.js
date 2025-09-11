@@ -8,7 +8,10 @@ function createGameboard() {
         let container = document.getElementById("game");
         for(let r = 0; r < gameBoard.length; r++) {
             // may change element type
-            let row = document.createElement("p");
+            let row = document.createElement("h2");
+            row.className = "row";
+            // may change so that each point on the board is a button
+            // when clicked it will add the players mark
             for(let c = 0; c < gameBoard[r].length; c++) {
                 row.textContent += gameBoard[r][c];
             }
@@ -26,7 +29,7 @@ function players() {
     const mark = "";
     const display = function() {
         let container = document.getElementById("game");
-        let s = document.createElement("p");
+        let s = document.createElement("h3");
         s.textContent = score;
         container.appendChild(s);
     };
