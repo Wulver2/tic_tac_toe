@@ -13,7 +13,12 @@ function createGameboard() {
             // may change so that each point on the board is a button
             // when clicked it will add the players mark
             for(let c = 0; c < gameBoard[r].length; c++) {
-                row.textContent += gameBoard[r][c];
+                let point = document.createElement("button");
+                point.className = "point"
+                if (gameBoard[r][c] != "*") {
+                    point.textContent = gameBoard[r][c];
+                }
+                row.appendChild(point);
             }
             container.appendChild(row);
         }
