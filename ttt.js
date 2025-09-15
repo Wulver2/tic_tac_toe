@@ -4,6 +4,7 @@ function createGameboard() {
     let gameBoard = [["*","*","*"], ["*","*","*"], ["*","*","*"]];
     const addX = function(row, col) { gameBoard[row][col] = "X"};
     const addO = function(row, col) { gameBoard[row][col] = "O"};
+    
     const display = function() {
         //add event for buttons so that they add the players mark
         let container = document.getElementById("game");
@@ -19,6 +20,9 @@ function createGameboard() {
                 if (gameBoard[r][c] != "*") {
                     point.textContent = gameBoard[r][c];
                 }
+                point.addEventListener("click", (e) => {
+
+                });
                 row.appendChild(point);
             }
             container.appendChild(row);
@@ -29,10 +33,10 @@ function createGameboard() {
     return {addX, addO, display};
 }
 
-function players(mark) {
+function players(m) {
     var score = 0;
     //X or O
-    const mark = "";
+    const mark = m;
     const displayScore = function() {
         let container = document.getElementById("game");
         let s = document.createElement("h3");
@@ -43,7 +47,7 @@ function players(mark) {
     const changeMark = function(newMark) {
         mark = newMark;
     };
-    return {display, changeMark};
+    return {displayScore, changeMark};
 }
 
 function game() {
