@@ -12,14 +12,14 @@
 
 #game {
     display: grid;
-    grid-template-rows: repeat(3, 50px);
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 120px);
     gap: 5px;
-    text-align: center;
     margin-top: 100px;
 }
 
 #game .point  {
-    font-size: 32px;
+
 }
 
 .point {

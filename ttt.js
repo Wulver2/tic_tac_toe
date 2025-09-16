@@ -1,18 +1,35 @@
 function createGameboard() {
-    // need to account for a player attempting to add a X/O
-    // to a spot that already has one
     let gameBoard = [["*","*","*"], ["*","*","*"], ["*","*","*"]];
-    const addX = function(row, col) { gameBoard[row][col] = "X"};
-    const addO = function(row, col) { gameBoard[row][col] = "O"};
-    
+    let currPlayer = "X"
+    let openSpots = 9; // will help track how filled the board is
+
+    const addX = function(row, col) { 
+        gameBoard[row][col] = "X";
+        openSpots -= 1;
+    };
+    const addO = function(row, col) { 
+        gameBoard[row][col] = "O";
+        openSpots -= 1;
+    };
+    const cellClicked = (row, col) => {
+        if (gameBoard[row][col] != "*") {
+            return;
+        }
+        gameBoard[row][col] = currPlayer;
+        // check for win somewhere here
+        if (currPlayer == "X"){
+            currPlayer = "O";
+        }
+        else {
+            currPlayer = "X"
+        }
+    }
     const display = function() {
-        //add event for buttons so that they add the players mark
+ 
         let container = document.getElementById("game");
         for(let r = 0; r < gameBoard.length; r++) {
-            // may change element type
             let row = document.createElement("h2");
             row.className = "row";
-            // may change so that each point on the board is a button
             // when clicked it will add the players mark
             for(let c = 0; c < gameBoard[r].length; c++) {
                 let point = document.createElement("button");
@@ -20,9 +37,10 @@ function createGameboard() {
                 if (gameBoard[r][c] != "*") {
                     point.textContent = gameBoard[r][c];
                 }
-                point.addEventListener("click", (e) => {
-
-                });
+                point.addEventListener("click", () => {
+                    cellClicked(r,c);
+                    point.textContent = gameBoard[r][c];
+                } )
                 row.appendChild(point);
             }
             container.appendChild(row);
@@ -33,35 +51,12 @@ function createGameboard() {
     return {addX, addO, display};
 }
 
-function players(m) {
-    var score = 0;
-    //X or O
-    const mark = m;
-    const displayScore = function() {
-        let container = document.getElementById("game");
-        let s = document.createElement("h3");
-        s.textContent = score;
-        container.appendChild(s);
-    };
-    // change mark for new game
-    const changeMark = function(newMark) {
-        mark = newMark;
-    };
-    return {displayScore, changeMark};
-}
-
 function game() {
     // for now player 1 will be fixed to only add X's
     // and player 2 will only be able to add O's.
     // later on want the players to be able to choose their own
-    const playerOne = players("X");
-    const playerTwo = players("O");
     var board = createGameboard();
 
-    const turn = function(player) {
-        // displays "X's turn" or "O's turn"
-
-    };
     const gameplay = function() {
         // X goes frist, then O. 
         // prevent players from marking same tile
@@ -74,5 +69,3 @@ function game() {
 }
 var play = game();
 play.board.display();
-play.board.addX(0,0);
-play.board.addO(2,1);
