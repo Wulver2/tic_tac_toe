@@ -1,29 +1,79 @@
 function createGameboard() {
     let gameBoard = [["*","*","*"], ["*","*","*"], ["*","*","*"]];
-    let currPlayer = "X"
+    let currPlayer = "X";
     let openSpots = 9; // will help track how filled the board is
 
-    const addX = function(row, col) { 
-        gameBoard[row][col] = "X";
-        openSpots -= 1;
+    const wins = function() {
+        // 3 in a row
+        for(let r = 0; r < gameBoard.length; r++) {
+            if (gameBoard[r][0] == currPlayer && 
+                gameBoard[r][1] == currPlayer && gameBoard[r][2] == currPlayer) {
+                    //highlight row and annouce win
+                    return true;
+                }
+        }
+        // 3 in a column
+        for(let c = 0; c < gameBoard.length; c++) {
+            if (gameBoard[0][c] == currPlayer && 
+                gameBoard[1][c] == currPlayer && gameBoard[2][c] == currPlayer) {
+                    //highlight row and annouce win
+                    return true;
+                }
+        }
+        // diagonal wins
+        if (gameBoard[0][0] == currPlayer && 
+            gameBoard[1][1] == currPlayer && gameBoard[2][2] == currPlayer) {
+                //highlight row and annouce win
+                return true;
+        }
+        else if (gameBoard[0][2] == currPlayer && 
+            gameBoard[1][1] == currPlayer && gameBoard[2][0] == currPlayer) {
+                //highlight row and annouce win
+            return true;
+        }
+
+        return false;
+    }
+    const gameStatus = function() {
+        // check if currPlayer wins
+        // if so display that they win, highlight 3 in a row, wait a few seconds,
+        // and clear board
+
+        let container = document.getElementById("game");
+        if (wins() == true) {
+            // adjust position of annoucement later, (currently covering the board)
+            let annoucement = document.createElement("h2");
+            annoucement.textContent = `${currPlayer}'s win!`;
+            container.appendChild(annoucement);
+            return;
+        }
+
+        if (openSpots != 0){
+            //game can continue
+            return;
+        }
+        else {
+            // no spots left and neither player has won, game is a tie
+            // display that it is a tie, and clear board
+        }
     };
-    const addO = function(row, col) { 
-        gameBoard[row][col] = "O";
-        openSpots -= 1;
-    };
+
     const cellClicked = (row, col) => {
         if (gameBoard[row][col] != "*") {
             return;
         }
         gameBoard[row][col] = currPlayer;
+        openSpots -= 0
         // check for win somewhere here
+        gameStatus();
         if (currPlayer == "X"){
             currPlayer = "O";
         }
         else {
             currPlayer = "X"
         }
-    }
+    };
+
     const display = function() {
  
         let container = document.getElementById("game");
@@ -46,15 +96,11 @@ function createGameboard() {
             container.appendChild(row);
         }
     };
-    // may add function to play/update display when addX or add0 is used
 
-    return {addX, addO, display};
+    return {display};
 }
 
 function game() {
-    // for now player 1 will be fixed to only add X's
-    // and player 2 will only be able to add O's.
-    // later on want the players to be able to choose their own
     var board = createGameboard();
 
     const gameplay = function() {
