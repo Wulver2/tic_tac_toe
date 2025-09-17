@@ -1,10 +1,11 @@
 function createGameboard() {
-    let gameBoard = [["*","*","*"], ["*","*","*"], ["*","*","*"]];
+    let gameBoard = [["","",""], ["","",""], ["","",""]];
     let currPlayer = "X";
     let openSpots = 9; // will help track how filled the board is
     // keep track of scores for scoreboard
     let x_score = 0;
     let o_score = 0;
+    let win = false;
 
     const wins = function() {
         // this function iterates through the board to look for any wins 
@@ -35,13 +36,32 @@ function createGameboard() {
 
         return false;
     }
+
+    const reset = function() {
+        // resets game by reseting gameboard
+        for (let r = 0; r < gameBoard.length; r++) {
+            for (let c = 0; c < gameBoard[r].length; c++) {
+                gameBoard[r][c] = "";
+            }
+        }
+        // reset buttons
+        let buttons = document.getElementsByClassName("point");
+
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].textContent = "";
+        }
+        win = false;
+        openSpots = 9
+    }
+
     const gameStatus = function() {
         // check if currPlayer wins
         // if so display that they win, highlight 3 in a row, wait a few seconds,
         // and clear board
 
         let container = document.getElementById("scoreboard");
-        if (wins() == true) {
+        win = wins();
+        if (win == true) {
             // updates the score board and annouce's who won
             // later want the winning tiles to light up / change color
             if (currPlayer == "X") {
@@ -51,7 +71,7 @@ function createGameboard() {
                 o_score += 1;
             }
             let score = document.getElementById("score");
-            score.firstChild.textContent = `${x_score} | ${o_score}`;
+            score.firstChild.textContent = `${x_score} : ${o_score}`;
             let annoucement = document.createElement("h2");
             annoucement.textContent = `${currPlayer}'s win!`;
             container.appendChild(annoucement);
@@ -66,15 +86,16 @@ function createGameboard() {
         else {
             // no spots left and neither player has won, game is a tie
             // display that it is a tie, and clear board
+            setTimeout(reset, 2000);
         }
     };
 
     const cellClicked = (row, col) => {
-        if (gameBoard[row][col] != "*") {
+        if (gameBoard[row][col] != "") {
             return;
         }
         gameBoard[row][col] = currPlayer;
-        openSpots -= 0
+        openSpots -= 1
         // check for win somewhere here
         gameStatus();
         if (currPlayer == "X"){
@@ -95,12 +116,15 @@ function createGameboard() {
             for(let c = 0; c < gameBoard[r].length; c++) {
                 let point = document.createElement("button");
                 point.className = "point"
-                if (gameBoard[r][c] != "*") {
+                if (gameBoard[r][c] != "") {
                     point.textContent = gameBoard[r][c];
                 }
                 point.addEventListener("click", () => {
                     cellClicked(r,c);
                     point.textContent = gameBoard[r][c];
+                    if (win == true) {
+                        setTimeout(reset, 2000);
+                    }
                 } )
                 row.appendChild(point);
             }
