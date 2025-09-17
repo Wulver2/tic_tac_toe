@@ -15,7 +15,14 @@
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 120px);
     gap: 5px;
+
+}
+
+.main {
     margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .point {

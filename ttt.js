@@ -138,13 +138,6 @@ function createGameboard() {
 function game() {
     var board = createGameboard();
 
-    const gameplay = function() {
-        // X goes frist, then O. 
-        // prevent players from marking same tile
-        // check for 3 in a row.
-        // repeat until 3 in a row occurs or
-        // board is filled
-    };
     return {board}
 
 }
