@@ -2,33 +2,34 @@ function createGameboard() {
     let gameBoard = [["*","*","*"], ["*","*","*"], ["*","*","*"]];
     let currPlayer = "X";
     let openSpots = 9; // will help track how filled the board is
+    // keep track of scores for scoreboard
+    let x_score = 0;
+    let o_score = 0;
 
     const wins = function() {
-        // 3 in a row
-        for(let r = 0; r < gameBoard.length; r++) {
+        // this function iterates through the board to look for any wins 
+
+        // checks for 3 in a row
+        for (let r = 0; r < gameBoard.length; r++) {
             if (gameBoard[r][0] == currPlayer && 
                 gameBoard[r][1] == currPlayer && gameBoard[r][2] == currPlayer) {
-                    //highlight row and annouce win
                     return true;
                 }
         }
-        // 3 in a column
-        for(let c = 0; c < gameBoard.length; c++) {
+        // checks for 3 in a column
+        for (let c = 0; c < gameBoard.length; c++) {
             if (gameBoard[0][c] == currPlayer && 
                 gameBoard[1][c] == currPlayer && gameBoard[2][c] == currPlayer) {
-                    //highlight row and annouce win
                     return true;
                 }
         }
-        // diagonal wins
+        // checking for diagonal wins
         if (gameBoard[0][0] == currPlayer && 
             gameBoard[1][1] == currPlayer && gameBoard[2][2] == currPlayer) {
-                //highlight row and annouce win
                 return true;
         }
         else if (gameBoard[0][2] == currPlayer && 
             gameBoard[1][1] == currPlayer && gameBoard[2][0] == currPlayer) {
-                //highlight row and annouce win
             return true;
         }
 
@@ -39,12 +40,22 @@ function createGameboard() {
         // if so display that they win, highlight 3 in a row, wait a few seconds,
         // and clear board
 
-        let container = document.getElementById("game");
+        let container = document.getElementById("scoreboard");
         if (wins() == true) {
-            // adjust position of annoucement later, (currently covering the board)
+            // updates the score board and annouce's who won
+            // later want the winning tiles to light up / change color
+            if (currPlayer == "X") {
+                x_score += 1;
+            }
+            else {
+                o_score += 1;
+            }
+            let score = document.getElementById("score");
+            score.firstChild.textContent = `${x_score} | ${o_score}`;
             let annoucement = document.createElement("h2");
             annoucement.textContent = `${currPlayer}'s win!`;
             container.appendChild(annoucement);
+            // wait and then clear board and reset gameboard array
             return;
         }
 

@@ -18,11 +18,11 @@
     margin-top: 100px;
 }
 
-#game .point  {
-
-}
-
 .point {
     padding: 50px;
     border-style: solid;
+}
+
+#scoreboard {
+
 }
