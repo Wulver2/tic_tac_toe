@@ -74,6 +74,7 @@ function createGameboard() {
             score.firstChild.textContent = `${x_score} : ${o_score}`;
             let annoucement = document.createElement("h2");
             annoucement.textContent = `${currPlayer}'s win!`;
+            annoucement.id = annoucement
             container.appendChild(annoucement);
             // wait and then clear board and reset gameboard array
             return;
@@ -116,20 +117,32 @@ function createGameboard() {
             for(let c = 0; c < gameBoard[r].length; c++) {
                 let point = document.createElement("button");
                 point.className = "point"
+
                 if (gameBoard[r][c] != "") {
                     point.textContent = gameBoard[r][c];
                 }
+
                 point.addEventListener("click", () => {
                     cellClicked(r,c);
                     point.textContent = gameBoard[r][c];
                     if (win == true) {
                         setTimeout(reset, 2000);
                     }
-                } )
+                });
                 row.appendChild(point);
             }
+
             container.appendChild(row);
         }
+        // players will also be able to reset the gameboard by pressing a button
+        let resetButton = document.createElement("button");
+        let options = document.getElementById("options");
+        resetButton.textContent = "reset gameboard";
+        resetButton.id = "reset";
+        resetButton.addEventListener("click", (e) => {
+            reset()
+        });
+        options.appendChild(resetButton);
     };
 
     return {display};

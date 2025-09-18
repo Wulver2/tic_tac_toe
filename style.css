@@ -30,6 +30,14 @@
     border-style: solid;
 }
 
+#reset {
+    width: 150px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: red;
+    color: white;
+}
+
 #scoreboard {
 
 }
