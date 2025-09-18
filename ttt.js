@@ -50,6 +50,9 @@ function createGameboard() {
         for (let i = 0; i < buttons.length; i++) {
             buttons[i].textContent = "";
         }
+        // get rid of the winner annoucement 
+        let annoucement = document.getElementById("annoucement");
+        annoucement.remove();
         win = false;
         openSpots = 9
     }
@@ -74,7 +77,7 @@ function createGameboard() {
             score.firstChild.textContent = `${x_score} : ${o_score}`;
             let annoucement = document.createElement("h2");
             annoucement.textContent = `${currPlayer}'s win!`;
-            annoucement.id = annoucement
+            annoucement.id = "annoucement"
             container.appendChild(annoucement);
             // wait and then clear board and reset gameboard array
             return;
